@@ -73,3 +73,7 @@ form button:hover {
   margin: 5px 0;
   font-size: 0.9em;
 }
+
+paragraferBackgroundColor {
+  background-color: var(--primary-color);
+}

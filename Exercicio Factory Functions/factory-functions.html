@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Calculadora</title>
+  <link rel="stylesheet" href="./assets/css/factory-functions.css">
+</head>
+
+<body>
+
+  <section class="container">
+    <h1>Calculadora</h1>
+
+    <table id="calculadora">
+      <div id="calculator-inputs">
+        <input type="text" id="math-input" readonly>
+      </div>
+
+      <div id="math-buttons">
+        <div id="firstLine">
+          <button id="clear-math" class="btn-operator">C</button>
+          <button id="leftParenteses-math" class="btn-num">(</button>
+          <button id="rightParenteses-math" class="btn-num">)</button>
+          <button id="division-math" class="btn-num">/</button>
+        </div>
+
+        <div id="secondLine">
+          <button id="seven-math" class="btn-num">7</button>
+          <button id="eight-math" class="btn-num">8</button>
+          <button id="nine-math" class="btn-num">9</button>
+          <button id="multiply-math" class="btn-num">*</button>
+        </div>
+
+        <div id="thirdLine">
+          <button id="four-math" class="btn-num">4</button>
+          <button id="five-math" class="btn-num">5</button>
+          <button id="six-math" class="btn-num">6</button>
+          <button id="sum-math" class="btn-num">+</button>
+        </div>
+
+        <div id="fourLine">
+          <button id="one-math" class="btn-num">1</button>
+          <button id="two-math" class="btn-num">2</button>
+          <button id="tree-math" class="btn-num">3</button>
+          <button id="sub-math" class="btn-num">-</button>
+        </div>
+
+        <div id="fiveLine">
+          <button id="separator-math" class="btn-num">.</button>
+          <button id="zero-math" class="btn-num">0</button>
+          <button id="remove-math" class="btn-operator"><<</button>
+          <button id="showResult" class="btn-operator">=</button>
+        </div>
+    </table>
+  </section>
+
+  <script src="./assets/js/factory-functions.js"></script>
+</body>
+
+</html>

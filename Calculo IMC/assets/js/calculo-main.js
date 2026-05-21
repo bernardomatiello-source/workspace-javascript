@@ -1,6 +1,6 @@
 function myScope() {
-    const weight = document.getElementById('input-teste-1')
-    const height = document.getElementById('input-teste-2')
+    const weight = document.getElementById('input-peso')
+    const height = document.getElementById('input-altura')
     const imcResult = document.querySelector('#imc-result')
     const form = document.querySelector('#form')
 
@@ -15,7 +15,7 @@ function myScope() {
 
         if (!altura) {
             setResult('Altura Invalida', false)
-            return
+            returnw
         }
 
         if (peso >= 700 || peso <= 0.55 || altura >= 2.70 || altura <= 0.50) {
@@ -23,10 +23,15 @@ function myScope() {
             return
         }
 
-        const imc = peso / (altura * altura)
+        const imc = getImc(peso, altura)
+        const level = setLevel(imc)
+        setResult(`Seu IMC e ${imc} (${level})`, true)
 
-        setLevel(imc, true)
+    }
 
+    function getImc(peso, altura) {
+        const imc = peso / altura ** 2
+        return imc.toFixed(2)
     }
 
     function setResult(message, isValid) {
@@ -35,19 +40,21 @@ function myScope() {
     }
 
     function setLevel(imc) {
-        if (imc <= 18.5) {
-            setResult(`Seu IMC e ${imc.toFixed(2)} (Abaixo do peso)`, true)
-        } else if (imc <= 24.9) {
-            setResult(`Seu IMC e ${imc.toFixed(2)} (Peso normal)`, true)
-        } else if (imc <= 29.9) {
-            setResult(`Seu IMC e ${imc.toFixed(2)} (Sobrepeso)`, true)
-        } else if (imc <= 34.9) {
-            setResult(`Seu IMC e ${imc.toFixed(2)} (Obesidade grau 1)`, true)
-        } else if (imc <= 39.9) {
-            setResult(`Seu IMC e ${imc.toFixed(2)} (Obesidade grau 2)`, true)
-        } else if (imc >= 40) {
-            setResult(`Seu IMC e ${imc.toFixed(2)} (Obesidade grau 3)`, true)
-        }
+        const levels = [
+            'Abaixo do Peso', // 0
+            'Peso Normal', // 1
+            'Sobrepeso', // 2
+            'Obesidade grau 1', // 3 
+            'Obesidade grau 2', // 4
+            'Obesidade grau 3' // 5
+        ]
+
+        if (imc < 18.5) return levels[0]
+        if (imc <= 24.9) return levels[1]
+        if (imc <= 29.9) return levels[2]
+        if (imc <= 34.9) return levels[3]
+        if (imc <= 39.9) return levels[4]
+        if (imc >= 40) return levels[5]
     }
 
     form.addEventListener('submit', function (evento) {

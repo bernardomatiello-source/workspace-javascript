@@ -60,6 +60,12 @@ form button:hover {
   background: var(--primary-color-darker);
 }
 
+.tabela-imc {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
 .coluna {
   flex: 1;
 }

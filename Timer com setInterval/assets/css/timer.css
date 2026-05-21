@@ -73,3 +73,16 @@ form button:hover {
   margin: 5px 0;
   font-size: 0.9em;
 }
+
+.timerShow {
+  font-size: 50px;
+  margin: 0;
+}
+
+button {
+  font-size: 15px
+}
+
+.stopTimer {
+  color: red;
+}
