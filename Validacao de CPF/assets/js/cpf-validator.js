@@ -1,68 +1,74 @@
 const cpfInput = document.getElementById('cpf-input')
 const validateBtn = document.getElementById('validate-btn')
-const validationResult = document.getElementById('validation-result')
+const validateResult = document.getElementById('validation-result')
 
-function ValidateCpf(sendedCpf) {
-    Object.defineProperty(this, 'cleanedCpf', {
-        get: function () {
-            return sendedCpf.replace(/\D+/g, '')
-        }
-    })
+class ValidateCpf {
+    constructor(sendedCpf) {
+        Object.defineProperty(this, 'cleanedCpf', {
+            writable: false,
+            enumerable: true,
+            configurable: false,
+            value: sendedCpf.replace(/\D+/g, '')
+        })
+    }
+
+    validate() {
+        if (!this.cleanedCpf) return false
+        if (typeof this.cleanedCpf !== 'string') return false
+        if (this.cleanedCpf.length !== 11) return false
+        if (this.isSequence()) return false
+
+        let partialCpf = this.cleanedCpf.slice(0, -2)
+
+        const firstDigit = this.generateDigit(partialCpf)
+        partialCpf += firstDigit
+
+        const secondDigit = this.generateDigit(partialCpf)
+        partialCpf += secondDigit
+
+        if (this.cleanedCpf !== partialCpf) return false
+        console.log(typeof this.cleanedCpf)
+        console.log(typeof partialCpf)
+
+        return true
+    }
+
+    isSequence() {
+        return this.cleanedCpf[0].repeat(11) === this.cleanedCpf
+    }
+
+    generateDigit(partialCpf) {
+
+        const cpfArray = Array.from(partialCpf)
+
+        let multiplyNum = cpfArray.length + 1
+        const multipliedArray = cpfArray.map(value => {
+            const multipliedValue = value * multiplyNum
+            multiplyNum--
+            return multipliedValue
+        })
+
+        const sumedArray = multipliedArray.reduce((acc, curr) => acc += curr)
+
+        const digit = (11 - (sumedArray % 11))
+        return digit >= 0 ? String(digit): '0'
+    }
 }
-
-ValidateCpf.prototype.validate = function () {
-
-    const cleanedCpf = this.cleanedCpf
-
-    if (typeof cleanedCpf === 'undefined') return false
-    if (cleanedCpf.length !== 11) return false
-    if(this.isSequence()) return false
-
-    const partialCpf = cleanedCpf.slice(0, -2)
-
-    const firstDigit = this.createDigit(partialCpf)
-    const secondDigit = this.createDigit(partialCpf + firstDigit)
-
-    const newCpf = partialCpf + firstDigit + secondDigit
-
-    if (newCpf !== cleanedCpf) return false
-
-    return true
-}
-
-ValidateCpf.prototype.isSequence = function() {
-    return this.cleanedCpf[0].repeat(11) ? true : false
-}
-
-ValidateCpf.prototype.createDigit = function (partialCpf) {
-
-    const arrayCpf = Array.from(partialCpf)
-
-    let regressive = arrayCpf.length + 1
-    const multipliedArray = arrayCpf.map(value => {
-        const curValue = (Number(value)) * regressive
-        regressive--
-        return curValue
-    })
-
-    const sumedArray = multipliedArray.reduce((acc, curr) => acc += curr)
-
-    const digit = (11 - (sumedArray % 11))
-    return digit > 9 ? '0' : String(digit)
-
-}
-
 
 validateBtn.addEventListener('click', () => {
-    const cpf = new ValidateCpf(cpfInput.value)
 
-    if (cpf.validate()) {
-        validationResult.innerText = 'CPF Valido!'
-        validationResult.classList.remove('invalid-cpf')
-        validationResult.classList.add('valid-cpf')
+    const validateCpf = new ValidateCpf(cpfInput.value)
+
+    const validation = validateCpf.validate()
+
+    if (validation) {
+        validateResult.innerText = `Valid CPF`
+        validateResult.classList.remove('invalid-cpf')
+        validateResult.classList.add('valid-cpf')
     } else {
-        validationResult.innerText = 'CPF Invalido!'
-        validationResult.classList.remove('valid-cpf')
-        validationResult.classList.add('invalid-cpf')
+        validateResult.innerText = `Invalid CPF`
+        validateResult.classList.remove('valid-cpf')
+        validateResult.classList.add('invalid-cpf')
     }
+
 })
