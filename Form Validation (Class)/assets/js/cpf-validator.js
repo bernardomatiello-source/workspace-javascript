@@ -1,7 +1,3 @@
-const cpfInput = document.getElementById('cpf-input')
-const validateBtn = document.getElementById('validate-btn')
-const validateResult = document.getElementById('validation-result')
-
 class ValidateCpf {
     constructor(rawCpf) {
         Object.defineProperty(this, 'cleanedCpf', {
@@ -27,8 +23,6 @@ class ValidateCpf {
         partialCpf += secondDigit
 
         if (this.cleanedCpf !== partialCpf) return false
-        console.log(typeof this.cleanedCpf)
-        console.log(typeof partialCpf)
 
         return true
     }
@@ -51,24 +45,6 @@ class ValidateCpf {
         const summedArray = multipliedArray.reduce((acc, curr) => acc += curr)
 
         const digit = (11 - (summedArray % 11))
-        return digit > 9 ? String(digit): '0'
+        return digit > 9 ? '0': String(digit)
     }
 }
-
-validateBtn.addEventListener('click', () => {
-
-    const validateCpf = new ValidateCpf(cpfInput.value)
-
-    const validation = validateCpf.validate()
-
-    if (validation) {
-        validateResult.innerText = `Valid CPF`
-        validateResult.classList.remove('invalid-cpf')
-        validateResult.classList.add('valid-cpf')
-    } else {
-        validateResult.innerText = `Invalid CPF`
-        validateResult.classList.remove('valid-cpf')
-        validateResult.classList.add('invalid-cpf')
-    }
-
-})
